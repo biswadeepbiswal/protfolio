@@ -9,6 +9,9 @@ fi
 # Run migrations
 php artisan migrate --force
 
+# Seed data on first deploy (only if about_settings table is empty)
+php artisan db:seed --class=ResumeSeeder --force 2>/dev/null || true
+
 # Create storage link
 php artisan storage:link --force 2>/dev/null || true
 

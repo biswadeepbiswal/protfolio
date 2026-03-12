@@ -1,0 +1,49 @@
+services:
+  - type: web
+    name: portfolio
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: APP_KEY
+        generateValue: true
+      - key: APP_URL
+        fromService:
+          type: web
+          name: portfolio
+          property: host
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_HOST
+        fromDatabase:
+          name: portfolio-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: portfolio-db
+          property: port
+      - key: DB_DATABASE
+        fromDatabase:
+          name: portfolio-db
+          property: database
+      - key: DB_USERNAME
+        fromDatabase:
+          name: portfolio-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: portfolio-db
+          property: password
+      - key: CACHE_STORE
+        value: file
+      - key: SESSION_DRIVER
+        value: file
+
+databases:
+  - name: portfolio-db
+    plan: free

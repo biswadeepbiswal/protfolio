@@ -13,6 +13,11 @@ class ResumeSeeder extends Seeder
 {
     public function run(): void
     {
+        // Only seed if no data exists yet
+        if (\App\Models\AboutSetting::count() > 0) {
+            return;
+        }
+
         AboutSetting::create([
             'name' => 'BISWADEEP BISWAL',
             'email' => 'Biswadeepb81@gmail.com',
